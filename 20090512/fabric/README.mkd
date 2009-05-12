@@ -1,0 +1,24 @@
+# Fabric
+
+[Fabric][1] is a "simple pythonic deployment tool".
+All it requires is it's installation and a fabfile.py.
+
+A sample fabfile.py might look like this:
+
+    config.fab_hosts=['my_app.net']
+    config.fab_key_filename='C:\Programme\putty\id_dsa.ppk'
+    config.remote_app_dir='~/code/my_app'
+
+    def deploy():
+        """Deploy my_app."""
+        local('hg push')
+        run('cd $(remote_app_dir); hg up')
+        run('cd $(remote_app_dir); cp production_settings.py local_settings.py')
+        run('cd $(remote_app_dir); touch my_app.wsgi')
+
+To run it enter the following into your shell:
+
+    fab deploy
+
+
+[1]: http://www.nongnu.org/fab "Fabric"
