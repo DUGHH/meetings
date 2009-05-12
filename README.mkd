@@ -1,0 +1,5 @@
+# Django User Group Hamburg Repository
+
+Here you find talks, pictures, code snippets etc. grouped by date.
+
+Have fun browsing.
