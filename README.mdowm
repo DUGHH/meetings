@@ -1,1 +1,10 @@
 # Django User Group Hamburg repository
+
+## Submodules
+
+Um Submodules auch zu bekommen im Hauptverzeichnis die Befehle:
+
+    git submodule init
+    git submodule update
+
+ausführen.
