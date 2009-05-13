@@ -1,0 +1,3 @@
+[submodule "20090512/kogakure-de"]
+	path = 20090512/kogakure-de
+	url = git://github.com/kogakure/kogakure-de.git
