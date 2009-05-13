@@ -1,1 +1,3 @@
 *.pyc #exclude all .pyc files
+*.db
+20090512/django_amf/.metadata/ #flex builder stuff
