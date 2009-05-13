@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/halo"
+		 xmlns:local="*"
+		 creationComplete="srv.getContents()">
+
+	<fx:Script>
+		<![CDATA[
+			import mx.events.ListEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.AsyncToken;			
+			
+			// Result handler method
+	        private function onUpdateResult( re:ResultEvent ): void
+	        {
+	        	if(content.contentId == 0)
+					ArrayCollection(list.dataProvider).addItem(Content(re.result));	                    
+	        }
+	        
+	        private function onDeleteResult( re:ResultEvent ): void
+	        {
+				ArrayCollection(list.dataProvider).removeItemAt(list.selectedIndex);	
+				content = new Content();				                    
+	        }
+
+			protected function list_itemClickHandler(event:ListEvent):void
+			{
+				if(ArrayCollection(list.dataProvider).getItemAt(event.rowIndex) == content) {
+					content = new Content();
+					list.selectedItem = null;
+				} else {
+					content = Content(list.selectedItem); 
+				}
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+
+		<local:Content id="content"
+					   name="{contentName.text}"
+					   description="{description.text}"
+					   someValue="{Number(someValue.text)}"/>
+
+		<mx:RemoteObject id="srv"
+						 destination="content"
+						 showBusyCursor="true"
+						 endpoint="/gateway/">
+			<mx:method name="update"
+					   result="onUpdateResult(event)"/>
+			<mx:method name="deleteContent"
+					   result="onDeleteResult(event)"/>
+		</mx:RemoteObject>
+		<mx:NumberValidator domain="real"
+							required="true"
+							source="{someValue}"
+							property="text"
+							trigger="{someValue}"
+							triggerEvent="change"
+							valid="updateBtn.enabled = true"
+							invalid="updateBtn.enabled = false"/>
+		<mx:StringValidator id="stringValidator"
+							required="true"
+							source="{contentName}"
+							property="text"
+							trigger="{contentName}"
+							triggerEvent="change"
+							valid="updateBtn.enabled = true"
+							invalid="updateBtn.enabled = false"/>
+	</fx:Declarations>
+	<s:HGroup left="10"
+			  right="10"
+			  top="10"
+			  bottom="10"
+			  gap="30">
+		<s:VGroup height="100%">
+			<mx:DataGrid id="list"
+						 dataProvider="{srv.getContents.lastResult}"
+						 width="450"
+						 itemClick="list_itemClickHandler(event)"
+						 height="100%">
+				<mx:columns>
+					<mx:DataGridColumn dataField="contentId"
+									   headerText="Id"
+									   width="25"/>
+					<mx:DataGridColumn dataField="name"
+									   headerText="Name"/>
+					<mx:DataGridColumn dataField="description"
+									   headerText="Description"/>
+					<mx:DataGridColumn dataField="someValue"
+									   headerText="Some Value"/>
+				</mx:columns>
+			</mx:DataGrid>
+			<s:Button label="Refresh"
+					  click="srv.getContents()"/>
+
+		</s:VGroup>
+
+		<s:VGroup height="100%">
+			<s:HGroup verticalAlign="middle">
+				<s:SimpleText text="Name:"
+							  fontWeight="bold"
+							  width="75"/>
+				<s:TextInput id="contentName"
+							 text="{content.name}"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="top">
+				<s:SimpleText text="Description:"
+							  fontWeight="bold"
+							  width="75"/>
+				<s:TextArea id="description"
+							height="100"
+							text="{content.description}"/>
+			</s:HGroup>
+			<s:HGroup>
+				<s:SimpleText text="Some Value:"
+							  fontWeight="bold"
+							  verticalAlign="middle"
+							  width="75"/>
+				<s:TextInput id="someValue"
+							 text="{content.someValue}"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="middle">
+				<s:Button id="updateBtn"
+						  label="{content.contentId == 0 ? 'Create' : 'Update'}"
+						  click="srv.update(content);"/>
+				<s:Button label="Delete"
+						  click="srv.deleteContent(content);"
+						  visible="{list.selectedItem != null}"/>
+			</s:HGroup>
+		</s:VGroup>
+	</s:HGroup>
+</s:Panel>
