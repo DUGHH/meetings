@@ -1,3 +1,6 @@
 [submodule "20090512/kogakure-de"]
 	path = 20090512/kogakure-de
 	url = git://github.com/kogakure/kogakure-de.git
+[submodule "20091027/fabric-0.9beta/gist-205829"]
+	path = 20091027/fabric-0.9beta/gist-205829
+	url = git://gist.github.com/205829.git
