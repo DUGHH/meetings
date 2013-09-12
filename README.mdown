@@ -8,7 +8,7 @@ Have fun browsing.
 
 [Here][1] you find all tweets tagged with "#dughh".
 
-[1]: http://search.twitter.com/search?q=#dughh "Twitter Search Results for #dughh"
+[1]: https://twitter.com/search?q=%23dughh "Twitter Search Results for #dughh"
 
 ## Submodules
 
