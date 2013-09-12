@@ -4,11 +4,13 @@ Here you find talks, pictures, code snippets etc. grouped by date.
 
 Have fun browsing.
 
+<!--
 # Find DUGHH folks on twitter
 
 [Here][1] you find all tweets tagged with "#dughh".
 
 [1]: http://search.twitter.com/search?q=#dughh "Twitter Search Results for #dughh"
+-->
 
 ## Submodules
 
